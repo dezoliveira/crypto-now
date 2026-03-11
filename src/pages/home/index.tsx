@@ -108,8 +108,12 @@ export function Home() {
           {coins.length > 0 && coins.map((item) => (
             <tr className={styles.tr} key={item.id}>
               <td className={styles.tdLabel} data-label="Moeda">
-                {/* <img alt="logoCripto" src={``} /> */}
                 <div className={styles.name}>
+                  <img
+                    className={styles.logo}
+                    alt="logoCripto"
+                    src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`}
+                  />
                   <Link to={`/detail/${item.id}`}>
                     <span>{item.name}</span> | {item.symbol}
                   </Link>
