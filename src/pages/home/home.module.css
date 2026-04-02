@@ -97,11 +97,14 @@ table td {
   display: flex;
   gap: 8px;
   align-items: center;
-
 }
 
 /* */
 @media  screen and (max-width: 600px) {
+  .name img {
+    margin-left: 14px;
+  }
+
   table {
     border: 0;
   }

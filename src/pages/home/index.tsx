@@ -3,7 +3,7 @@ import styles from './home.module.css'
 import { BsSearch } from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router'
 
-interface CoinProps {
+export interface CoinProps {
   id: string
   name: string
   symbol: string
@@ -28,14 +28,15 @@ interface DataProp{
 export function Home() {
   const [input, setInput] = useState("")
   const [coins, setCoins] = useState<CoinProps[]>([])
+  const [offset, setOffset] = useState(0)
   const navigate = useNavigate()
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [offset])
 
   async function getData() {
-    fetch("https://rest.coincap.io/v3/assets?limit=10&offset=0&key=80721d010992339b45d7c60f828e28fc7faaebb5b74ec870f06381c75a2e211d")
+    fetch(`https://rest.coincap.io/v3/assets?limit=10&offset=${offset}&key=80721d010992339b45d7c60f828e28fc7faaebb5b74ec870f06381c75a2e211d`)
     .then(response => response.json())
     .then((data: DataProp) => {
       const coinsData = data.data
@@ -62,7 +63,11 @@ export function Home() {
         return formated
       })
 
-      setCoins(formatedResult)
+      const listCoins = [...coins, ...formatedResult]
+      setCoins(listCoins)
+
+      console.log(listCoins)
+      
     })
   }
 
@@ -75,7 +80,12 @@ export function Home() {
   }
 
   function handleGetMore(){
-    alert('TESTE')
+    if (offset === 0) {
+      setOffset(10)
+      return
+    }
+
+    setOffset(offset + 10)
   }
 
   return (
@@ -114,7 +124,7 @@ export function Home() {
                     alt="logoCripto"
                     src={`https://assets.coincap.io/assets/icons/${item.symbol.toLocaleLowerCase()}@2x.png`}
                   />
-                  <Link to={`/detail/${item.id}`}>
+                  <Link key={item.id} to={`/detail/${item.id}`}>
                     <span>{item.name}</span> | {item.symbol}
                   </Link>
                 </div>
