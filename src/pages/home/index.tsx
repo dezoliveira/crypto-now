@@ -1,4 +1,5 @@
-import { useState, FormEvent, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import type { FormEvent } from 'react'
 import styles from './home.module.css'
 import { BsSearch } from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router'
@@ -30,13 +31,14 @@ export function Home() {
   const [coins, setCoins] = useState<CoinProps[]>([])
   const [offset, setOffset] = useState(0)
   const navigate = useNavigate()
+  const key = import.meta.env.VITE_API_KEY
 
   useEffect(() => {
     getData()
   }, [offset])
 
   async function getData() {
-    fetch(`https://rest.coincap.io/v3/assets?limit=10&offset=${offset}&key=80721d010992339b45d7c60f828e28fc7faaebb5b74ec870f06381c75a2e211d`)
+    fetch(`https://rest.coincap.io/v3/assets?limit=10&offset=${offset}&key=${key}`)
     .then(response => response.json())
     .then((data: DataProp) => {
       const coinsData = data.data
@@ -65,9 +67,6 @@ export function Home() {
 
       const listCoins = [...coins, ...formatedResult]
       setCoins(listCoins)
-
-      console.log(listCoins)
-      
     })
   }
 

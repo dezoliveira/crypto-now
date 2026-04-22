@@ -51,8 +51,6 @@ export function Detail() {
             formatedVolume: priceCompact.format(Number(data.data.volumeUsd24Hr))
           }
 
-          console.log(resultData)
-
           setCoin(resultData)
 
         })
@@ -60,6 +58,9 @@ export function Detail() {
       } catch (error) {
         console.log(error)
         navigate('/')
+        
+      } finally {
+        setLoading(false)
       }
     }
 
