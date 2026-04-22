@@ -99,7 +99,6 @@ table td {
   align-items: center;
 }
 
-/* */
 @media  screen and (max-width: 600px) {
   .name img {
     margin-left: 14px;
